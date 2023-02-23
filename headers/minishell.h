@@ -9,12 +9,13 @@
 #include <stdlib.h>
 
 #include "../srcs/libftprintf/headers/libftprintf.h"
+#include "lexer.h"
 
 typedef struct s_redir
 {
-	char	*infile;
-	char	*outfile;
-	char	*heredoc;
+	int	infile;
+	int	outfile;
+	int	heredoc;
 	int		append;
 }			t_redirec;
 
@@ -40,9 +41,6 @@ typedef struct s_prog
 //init
 t_prog			init_shell(char **envp);
 char			**get_path_variable(char **envp);
-//parsing
-int				parse_line(t_prog *prog, char *line);
-int				parse_cmd(t_prog *prog, char *line);
 //parsing_utils
 int				blank_line(char *line);
 //free utils
@@ -50,9 +48,6 @@ void			free_line(t_prog *prog, char *str);
 //command
 char			*get_correct_path(t_cmd cmd, char **env);
 int				check_cmd_file_valid(char *file_name);
-//redirect
-int				get_cmd_redirection(t_prog *prog, char *cmd, int n);
-int				redirect_heredoc(t_prog *prog, char *cmd, int n);
 //executor
 int				execute_line(t_prog *prog);
 
@@ -62,7 +57,7 @@ int				pipes_process(t_prog *prog, int n, int **fds);
 int				pipe_error_management(t_prog *prog, int code);
 //pipes_fd
 void			close_unused(t_prog *prog, int i, int **fds);
-void			end_close_pipes(t_cmd cmd, int n, int **fds);
+void			end_close_pipes(t_cmd *cmd, int n, int **fds);
 int				**pipes_2d_fd(t_prog *prog);
 int				dup_correct_fd(t_prog *prog, int **fds, int n);
 int				wait_subprocesses(t_prog *prog, int n, int **fds);

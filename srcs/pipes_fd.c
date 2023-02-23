@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:14:37 by tcasale           #+#    #+#             */
-/*   Updated: 2023/02/19 14:55:58 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:17:28 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,14 @@ void	close_unused(t_prog *prog, int i, int **fds)
 	}
 }
 
-void	end_close_pipes(t_cmd cmd, int n, int **fds)
+void	end_close_pipes(t_cmd *cmd, int n, int **fds)
 {
 	close(fds[n][0]);
 	close(fds[n + 1][1]);
-	if (cmd.infile != 0)
-		close(cmd.infile);
-	if (cmd.outfile != 0)
-		close(cmd.outfile);
-	if (cmd.outfile_a != 0)
-		close(cmd.outfile_a);
+	if (cmd->redirec.infile != 0)
+		close(cmd->redirec.infile);
+	if (cmd->redirec.outfile != 0)
+		close(cmd->redirec.outfile);
 }
 
 int	**pipes_2d_fd(t_prog *prog)

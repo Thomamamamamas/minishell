@@ -6,13 +6,14 @@
 #    By: tcasale <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/18 04:51:18 by tcasale           #+#    #+#              #
-#    Updated: 2023/02/19 13:49:47 by tcasale          ###   ########.fr        #
+#    Updated: 2023/02/23 13:19:24 by tcasale          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 
-SRCS	= $(wildcard srcs/*.c)
+SRCS	= $(wildcard srcs/*.c) \
+			$(wildcard srcs/lexer/*.c)
 
 OBJS	=${SRCS:.c=.o}
 

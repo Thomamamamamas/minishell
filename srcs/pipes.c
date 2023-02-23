@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:14:33 by tcasale           #+#    #+#             */
-/*   Updated: 2023/02/19 14:45:29 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/02/23 14:51:56 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	pipes_process(t_prog *prog, int n, int **fds)
 	if (path == NULL || check_cmd_file_valid(path) != 0)
 	{
 		free(path);
-		end_close_pipes(prog->cmds[n], n, fds);
+		end_close_pipes(&prog->cmds[n], n, fds);
 		if (n == prog->nb_cmd - 1)
 			return (-7);
 		exit(EXIT_FAILURE);
@@ -62,7 +62,7 @@ int	pipes_process(t_prog *prog, int n, int **fds)
 		execve(path, prog->cmds[n].cmd, prog->envp);
 	wait(NULL);
 	free(path);
-	end_close_pipes(prog->cmds[n], n, fds);
+	end_close_pipes(&prog->cmds[n], n, fds);
 	if (n == prog->nb_cmd - 1)
 		return (0);
 	exit(EXIT_SUCCESS);

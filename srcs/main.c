@@ -2,22 +2,27 @@
 
 int	main(int argc, char **argv,char **envp)
 {
-	char	*str;
-	t_prog	prog;
+	char	*line;
+	t_lex	lexer;
+	//t_prog	prog;
 
 	(void)argc;
 	(void)argv;
-	prog = init_shell(envp);
+	(void)envp;
+	//prog = init_shell(envp);
 	while (1)
 	{
 		rl_on_new_line();
-		str = readline("$ ");
-		if (str && !blank_line(str))
+		line = readline("$ ");
+		if (line && !blank_line(line))
 		{
-			add_history(str);
-			parse_line(&prog, str);
+			line = ft_strclear(line);
+			add_history(line);
+			lexing(line, &lexer);
+			print_tokens(&lexer);
+			free(line);
 			//execute_line(&prog);
-			free_line(&prog, str);
+			//free_line(&prog, line);
 		}
 	}
 	return (0);
