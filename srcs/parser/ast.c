@@ -6,22 +6,26 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:50:07 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/01 17:32:27 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/02 17:12:40 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/parser.h"
 
-t_ast	create_ast(t_token *token)
+t_ast	*create_ast(t_token *token)
 {
-	t_ast	res;
+	t_ast	*res;
 
+	res = (t_ast *)malloc(sizeof(t_ast));
 	if (token->token == TOKEN_PIPE)
-		init_pipe_ast_node(&res);
+	{
+		res->type = PIPE_NODE;
+		res->content = NULL;
+	}
 	else
-		init_first_ast_node(&res, token);
-	res.l_child = NULL;
-	res.r_child = NULL;
+		init_first_ast_node(res, token);
+	res->l_child = NULL;
+	res->r_child = NULL;
 	return (res);
 }
 
@@ -30,9 +34,7 @@ t_ast	*create_child(t_ast *parent, t_token *token, int side)
 	t_ast	*child;
 
 	child = malloc(sizeof(t_ast));
-	if (token->token == TOKEN_PIPE)
-		init_pipe_ast_node(child);
-	else if (token->token == TOKEN_EOF)
+	if (token->token == TOKEN_EOF)
 		return (NULL);
 	else
 		init_ast_node(child, parent, token);
@@ -45,10 +47,17 @@ t_ast	*create_child(t_ast *parent, t_token *token, int side)
 	return (child);
 }
 
-void	init_pipe_ast_node(t_ast *res)
+t_ast	*create_child_pipe(t_ast *parent)
 {
-	res->type = PIPE_NODE;
-	res->content = NULL;
+	t_ast	*child;
+
+	child = (t_ast *)malloc(sizeof(t_ast));
+	child->type = PIPE_NODE;
+	child->content = NULL;
+	child->r_child = NULL;
+	child->l_child = NULL;
+	parent->r_child = child;
+	return (child);
 }
 
 void	init_first_ast_node(t_ast *res, t_token *token)
@@ -82,9 +91,7 @@ void	init_ast_node(t_ast *res, t_ast *parent,  t_token *token)
 	}
 	else if (token->token == TOKEN_WORD)
 	{
-		if (parent == NULL)
-			res->type = CMD_NODE;
-		else if (parent->type == PIPE_NODE)
+		if (parent == NULL || parent->type == PIPE_NODE)
 			res->type = CMD_NODE;
 		else
 			res->type = ARG_NODE;

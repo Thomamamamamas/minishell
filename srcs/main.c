@@ -22,7 +22,10 @@ int	main(int argc, char **argv,char **envp)
 			lexing(line, &lexer);
 			print_tokens(&lexer);
 			parser = parse_line(&lexer);
-			print_ast(&parser.ast, 0);
+			if (parser.error_code == 0)
+				print_ast(parser.ast, 0);
+			else
+				parsing_error_gestion(&parser);
 			//execute_line(&prog);
 			free_line_utils(&lexer, line);
 		}

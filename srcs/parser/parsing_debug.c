@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 04:14:54 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/01 17:32:27 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/02 17:19:33 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	print_ast(t_ast *node, int space)
 			break ;
 		case CMD_NODE:
 			ft_printf("COMMANDE : %s ", node->content);
-			print_ast(node->l_child, space + 1);
 			if (node->l_child == NULL)
 				printf("\n");
+			print_ast(node->l_child, space + 1);
 			break ;
 		case ARG_NODE:
 			ft_printf("%s ", node->content);

@@ -64,5 +64,8 @@ int				**pipes_2d_fd(t_prog *prog);
 int				dup_correct_fd(t_prog *prog, int **fds, int n);
 int				wait_subprocesses(t_prog *prog, int n, int **fds);
 
+//error_gestion
+void	parsing_error_gestion(t_parser *parser);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:39:47 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/01 14:50:23 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/02 18:36:12 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PARSER_H
@@ -14,6 +14,8 @@
 
 #include "../srcs/libftprintf/libft/libft.h"
 #include "lexer.h"
+
+# define SYNTAX_ERROR	1
 
 typedef enum ast_type
 {
@@ -35,23 +37,27 @@ typedef struct s_ast
 
 typedef struct s_parser
 {
-	struct s_ast	ast;
+	struct s_ast	*ast;
 	struct s_ast	*last_pipe_ast;
 	struct s_ast	*actual;
 	int				nb_pipes;
 	int				actual_pipe;
+	int				error_code;
+	char			*error_value;
 }					t_parser;
 
 //parsing
 t_parser	parsing(t_lex *lexer);
-int			check_syntax_error(t_lex *lexer);
+void		check_syntax_error(t_lex *lexer, t_parser *parser);
 t_parser	parse_line(t_lex *lexer);
 t_parser	init_parser(t_lex *lexer);
 int			get_nb_pipe(t_lex *lexer);
+//syntax_error
+void		get_syntax_error(t_parser *parser, t_list *actual, t_list *next);
 //ast
-t_ast		create_ast(t_token *token);
+t_ast		*create_ast(t_token *token);
 t_ast		*create_child(t_ast *parent, t_token *token, int side);
-void		init_pipe_ast_node(t_ast *res);
+t_ast		*create_child_pipe(t_ast *parent);
 void		init_first_ast_node(t_ast *res, t_token *token);
 void		init_ast_node(t_ast *res, t_ast *parent, t_token *token);
 //parsing_debug
