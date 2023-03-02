@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:35:14 by tcasale           #+#    #+#             */
-/*   Updated: 2023/02/23 19:45:52 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/01 13:44:49 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 void	print_tokens(t_lex *lexer)
 {
-	int	n;
+	t_list	*lst;
+	t_token	*token;
 
-	n = 0;
-	while (n < lexer->len)
+	ft_printf("__________LEXER__________\n");
+	lst = lexer->token_lst;
+	while (lst)
 	{
-		ft_printf("value = %s     type = ", lexer->tokens[n].value);
-		switch (lexer->tokens[n].token)
+		token = lst->content;
+		ft_printf("value = %s     type = ", token->value);
+		switch (token->token)
 		{
 			case TOKEN_EOF: 
 				printf("EOF\n");
@@ -35,6 +38,6 @@ void	print_tokens(t_lex *lexer)
 				printf("WORD\n");
 				break;
 		}
-		n++;
+		lst = lst->next;
 	}
 }

@@ -10,6 +10,7 @@
 
 #include "../srcs/libftprintf/headers/libftprintf.h"
 #include "lexer.h"
+#include "parser.h"
 
 typedef struct s_redir
 {
@@ -44,7 +45,8 @@ char			**get_path_variable(char **envp);
 //parsing_utils
 int				blank_line(char *line);
 //free utils
-void			free_line(t_prog *prog, char *str);
+void			free_line_utils(t_lex *lexer, char *line);
+void			free_token(void *token);
 //command
 char			*get_correct_path(t_cmd cmd, char **env);
 int				check_cmd_file_valid(char *file_name);

@@ -2,8 +2,9 @@
 
 int	main(int argc, char **argv,char **envp)
 {
-	char	*line;
-	t_lex	lexer;
+	char		*line;
+	t_lex		lexer;
+	t_parser	parser;
 	//t_prog	prog;
 
 	(void)argc;
@@ -20,9 +21,10 @@ int	main(int argc, char **argv,char **envp)
 			add_history(line);
 			lexing(line, &lexer);
 			print_tokens(&lexer);
-			free(line);
+			parser = parse_line(&lexer);
+			print_ast(&parser.ast, 0);
 			//execute_line(&prog);
-			//free_line(&prog, line);
+			free_line_utils(&lexer, line);
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:45:34 by tcasale           #+#    #+#             */
-/*   Updated: 2023/02/23 19:45:53 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/01 14:53:24 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,38 @@
 
 void	lexing(char *line, t_lex *lexer)
 {
-	int		len;
 	int		n;
+	t_token	*token;
+	t_list	*new;
 
 	n = 0;
-	len = 0;
-	lexer->len = get_nb_of_tokens(line);
-	printf("%d\n", lexer->len);
-	lexer->tokens = (t_token *)malloc(sizeof(t_token) * lexer->len);
-	while (len < lexer->len - 1)
+	while (line[n])
 	{
 		while (line[n] && is_space(line[n]))
 			n++;
 		if (line[n])
 		{
-			lexer->tokens[len].value = get_token_value(line, n);
-			printf("pute = %s\n", lexer->tokens[len].value);
-			lexer->tokens[len].token = get_token_type(lexer->tokens[len].value);
-			n = n + ft_strlen(lexer->tokens[len].value);
-			len = len + 1;
+			token = create_token(line, n);
+			ft_lstadd_back(&lexer->token_lst, ft_lstnew(token));
+			new = ft_lstlast(lexer->token_lst);
+			token = (t_token *)new->content;
+			n = n + ft_strlen(token->value);
 		}
 	}
-	lexer->tokens[len].value = "";
-	lexer->tokens[len].token = get_token_type(lexer->tokens[len].value);
+	token = create_token(line, n);
+	ft_lstadd_back(&lexer->token_lst, ft_lstnew(token));
 }
 
-int	get_nb_of_tokens(char *str)
+t_token	*create_token(char *line, int n)
 {
-	int	n;
-	int	res;
-
-	n = 0;
-	res = 0;
-	while (str[n])
-	{
-		if (str[n] == '"')
-		{
-			res++;
-			n++;
-			while (str[n] && str[n] != '"')
-				n++;
-			n++;
-		}
-		else if (str[n] && !is_space(str[n]) && str[n] != '"')
-		{
-			res++;
-			while (str[n] && (!is_space(str[n]) && str[n] != '"'))
-				n++;
-		}
-		else
-			n++;
-	}
-	return (res + 1);
+	t_token	*token;
+	token = (t_token *)malloc(sizeof(t_token));
+	if (n == -1)
+		token->value = "";
+	else
+	token->value = get_token_value(line, n);
+	token->token = get_token_type(token->value);
+	return (token);
 }
 
 char	*get_token_value(char *line, int start)
