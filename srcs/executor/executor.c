@@ -5,15 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/19 03:56:26 by tcasale           #+#    #+#             */
-/*   Updated: 2023/02/19 03:58:12 by tcasale          ###   ########.fr       */
+/*   Created: 2023/03/03 15:30:09 by tcasale           #+#    #+#             */
+/*   Updated: 2023/03/12 06:08:11 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
-int	execute_line(t_prog *prog)
+void	execute_line(t_parser *parser)
 {
-	pipes_fork(prog);
-	return (0);
+	t_list	*cmd_list;
+
+	init_ast_iteration(parser);
+	cmd_list = NULL;
+	cmd_list = ast_to_commands(parser->actual, cmd_list);
+	print_cmds(cmd_list);
 }

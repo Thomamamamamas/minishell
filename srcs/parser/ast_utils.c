@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_gestion.c                                    :+:      :+:    :+:   */
+/*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 18:38:10 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/02 18:50:43 by tcasale          ###   ########.fr       */
+/*   Created: 2023/03/03 16:18:08 by tcasale           #+#    #+#             */
+/*   Updated: 2023/03/11 00:01:21 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/parser.h"
 
-void	parsing_error_gestion(t_parser *parser)
+void	init_ast_iteration(t_parser *parser)
 {
-	if (parser->error_code == SYNTAX_ERROR)
-	{
-		ft_putstr_fd("syntax error near unexpected token : ", 2);
-		ft_putstr_fd(parser->error_value, 2);
-		ft_putstr_fd("\n", 2);
-	}
+	parser->actual = parser->ast;
+	parser->actual_pipe = 0;
+	if (parser->nb_pipes != 0)
+		parser->last_pipe_ast = parser->actual;
 }

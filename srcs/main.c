@@ -21,12 +21,14 @@ int	main(int argc, char **argv,char **envp)
 			add_history(line);
 			lexing(line, &lexer);
 			print_tokens(&lexer);
-			parser = parse_line(&lexer);
+			parsing(&lexer, &parser);
 			if (parser.error_code == 0)
+			{
 				print_ast(parser.ast, 0);
+				execute_line(&parser);
+			}
 			else
 				parsing_error_gestion(&parser);
-			//execute_line(&prog);
 			free_line_utils(&lexer, line);
 		}
 	}

@@ -6,11 +6,11 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:14:37 by tcasale           #+#    #+#             */
-/*   Updated: 2023/02/23 13:17:28 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/03 17:40:38 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 void	close_unused(t_prog *prog, int i, int **fds)
 {

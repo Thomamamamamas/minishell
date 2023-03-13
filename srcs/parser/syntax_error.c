@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:13:14 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/02 18:46:45 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/03 11:10:06 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	get_syntax_error(t_parser *parser, t_list *actual, t_list *next)
 	actual_tok = (t_token *)actual->content;
 	if (next != NULL)
 	{
-		ft_printf("pute\n");
 		next_tok = (t_token *)next->content;
 		if (actual_tok->token == TOKEN_REDIRECT && next_tok->token == TOKEN_REDIRECT)
 			parser->error_code = SYNTAX_ERROR;

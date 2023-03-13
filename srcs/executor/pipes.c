@@ -6,11 +6,11 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:14:33 by tcasale           #+#    #+#             */
-/*   Updated: 2023/02/23 14:51:56 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/05 10:30:52 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 int	pipes_fork(t_prog *prog)
 {
