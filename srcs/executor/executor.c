@@ -6,10 +6,9 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 15:30:09 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/12 06:08:11 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/25 16:55:33 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../headers/minishell.h"
 
 void	execute_line(t_parser *parser)

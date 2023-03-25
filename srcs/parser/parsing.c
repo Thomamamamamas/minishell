@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:50:32 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/03 11:19:36 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/24 10:43:43 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/parser.h"
@@ -45,7 +45,6 @@ void	parse_line(t_lex *lexer, t_parser *parser)
 	int			just_create_pipe;
 
 	lst = lexer->token_lst;
-	ft_printf("nb pipe = %d\n", parser->nb_pipes);
 	just_create_pipe = 0;
 	if (parser->nb_pipes == 0)
 		lst = lst->next;
@@ -56,7 +55,6 @@ void	parse_line(t_lex *lexer, t_parser *parser)
 			just_create_pipe = 1;
 		else if (token->token != TOKEN_PIPE)
 		{
-			ft_printf("value = %s\n", token->value);
 			if (just_create_pipe)
 			{
 				if (parser->actual_pipe != parser->nb_pipes)

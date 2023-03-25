@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:14:37 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/03 17:40:38 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/17 22:53:14 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,16 @@ void	close_unused(t_prog *prog, int i, int **fds)
 
 void	end_close_pipes(t_cmd *cmd, int n, int **fds)
 {
+	t_redirec	*redir;
+
 	close(fds[n][0]);
 	close(fds[n + 1][1]);
-	if (cmd->redirec.infile != 0)
-		close(cmd->redirec.infile);
-	if (cmd->redirec.outfile != 0)
-		close(cmd->redirec.outfile);
+	redir = get_last_cmd_redir(cmd->redir_list, 1);
+	if (redir && redir->infile != 0)
+		close(redir->infile);
+	redir = get_last_cmd_redir(cmd->redir_list, 1);
+	if (redir && redir->outfile != 0)
+		close(redir->outfile);
 }
 
 int	**pipes_2d_fd(t_prog *prog)
@@ -54,12 +58,12 @@ int	dup_correct_fd(t_prog *prog, int **fds, int n)
 {
 	if (n == 0)
 	{
-		if (dup2(prog->cmd_infile, 0) < 0 || dup2(fds[1][1], 1) < 0)
+		if (dup2(fds[1][1], 1) < 0)
 			return (pipe_error_management(prog, 2));
 	}
 	else if (n == prog->nb_cmd - 1)
 	{
-		if (dup2(fds[n][0], 0) < 0 || dup2(prog->cmd_outfile, 1) < 0)
+		if (dup2(fds[n][0], 0) < 0)
 			return (pipe_error_management(prog, 2));
 	}
 	else

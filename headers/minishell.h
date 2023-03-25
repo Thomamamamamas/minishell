@@ -12,7 +12,7 @@
 #include "lexer.h"
 #include "parser.h"
 
-typedef struct s_redir
+typedef struct s_redirec
 {
 	int		infile;
 	int		outfile;
@@ -50,13 +50,15 @@ int				blank_line(char *line);
 //free utils
 void			free_line_utils(t_lex *lexer, char *line);
 void			free_token(void *token);
-//command
+//create_command
 t_list			*ast_to_commands(t_ast *ast, t_list *cmd_list);
 t_list			*command_node(t_ast *ast);
 t_list			*command_redirection_node(t_ast *actual, t_cmd *cmd);
+//command_utils
 int				get_nb_arg_cmd(t_ast *ast);
 char			*get_correct_path(t_cmd cmd, char **env);
 int				check_cmd_file_valid(char *file_name);
+t_redirec		*get_last_cmd_redir(t_list *lst, int io);
 //pipes
 int				pipes_fork(t_prog *prog);
 int				pipes_process(t_prog *prog, int n, int **fds);
