@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 10:31:01 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/25 16:55:34 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/30 09:44:44 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
@@ -32,22 +32,23 @@ void	print_cmds(t_list *cmd_list)
 			n++;
 		}
 		printf("\n");
-		actual_redirec = cmd->redir_list;
-		while (actual_redirec)
+		if (cmd->redir_list)
 		{
-			redirec = (t_redirec *)actual_redirec->content;
-			printf("%d\n", redirec->infile);
-			if (redirec->heredoc == 1)
-				printf("\t<< ");
-			else if (redirec->infile == 1)
-				printf("\t< ");
-			else if (redirec->outfile == 1)
-				printf("\t> ");
-			else if (redirec->append == 1)
-				printf("\t>> ");
-			printf("pute\n");
-			printf("%s\n", redirec->file_name);
-			actual_redirec = actual_redirec->next;
+			actual_redirec = cmd->redir_list;
+			while (actual_redirec)
+			{
+				redirec = (t_redirec *)actual_redirec->content;
+				if (redirec->heredoc == 1)
+					printf("\t<< ");
+				else if (redirec->infile == 1)
+					printf("\t< ");
+				else if (redirec->append == 1)
+					printf("\t>> ");
+				else if (redirec->outfile == 1)
+					printf("\t> ");
+				printf("%s\n", redirec->file_name);
+				actual_redirec = actual_redirec->next;
+			}
 		}
 		actual_cmd = actual_cmd->next;
 	}

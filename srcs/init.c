@@ -6,6 +6,8 @@ t_prog	init_shell(char **envp)
 
 	prog.path = get_path_variable(envp);
 	prog.envp = envp;
+	prog.lexer = (t_lex *)malloc(sizeof(t_lex));
+	prog.parser = (t_parser *)malloc(sizeof(t_parser));
 	return (prog);
 }
 

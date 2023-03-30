@@ -6,13 +6,13 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:14:33 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/05 10:30:52 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/30 16:41:35 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	pipes_fork(t_prog *prog)
+int	command_fork(t_prog *prog)
 {
 	int	n;
 	int	res;
@@ -30,17 +30,17 @@ int	pipes_fork(t_prog *prog)
 			return (1);
 		if (ids[n] == 0)
 			if (wait_subprocesses(prog, n, fds) == 0)
-				pipes_process(prog, n, fds);
+				execute_process(prog, n, fds);
 		n++;
 	}
 	free(ids);
 	if (wait_subprocesses(prog, n, fds) == 0)
-		res = pipes_process(prog, n, fds);
+		res = execute_process(prog, n, fds);
 	ft_free_2d_int(fds, prog->nb_cmd + 1);
 	return (res);
 }
 
-int	pipes_process(t_prog *prog, int n, int **fds)
+int	execute_process(t_prog *prog, int n, int **fds)
 {
 	char	*path;
 	int		id;
@@ -66,14 +66,4 @@ int	pipes_process(t_prog *prog, int n, int **fds)
 	if (n == prog->nb_cmd - 1)
 		return (0);
 	exit(EXIT_SUCCESS);
-}
-
-int	pipe_error_management(t_prog *prog, int code)
-{
-	if (code == 1)
-		ft_putstr_fd("Error : Pipe error\n",2); 
-	if (code == 2)
-		ft_putstr_fd("Error : Dup error\n",2); 
-	prog->error = code;
-	return (code);
 }

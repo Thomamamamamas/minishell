@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:14:37 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/17 22:53:14 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/30 16:44:47 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	**pipes_2d_fd(t_prog *prog)
 	fds = ft_malloc_2d_int(2, prog->nb_cmd + 1);
 	n = 0;
 	while (n < prog->nb_cmd + 1)
-		if (pipe(fds[n++]) == -1)
-			pipe_error_management(prog, 1);
+		pipe(fds[n++]);
 	return (fds);
 }
 
@@ -59,17 +58,17 @@ int	dup_correct_fd(t_prog *prog, int **fds, int n)
 	if (n == 0)
 	{
 		if (dup2(fds[1][1], 1) < 0)
-			return (pipe_error_management(prog, 2));
+			return (-1);
 	}
 	else if (n == prog->nb_cmd - 1)
 	{
 		if (dup2(fds[n][0], 0) < 0)
-			return (pipe_error_management(prog, 2));
+			return (-1);
 	}
 	else
 	{
 		if (dup2(fds[n][0], 0) < 0 || dup2(fds[n + 1][1], 1) < 0)
-			return (pipe_error_management(prog, 2));
+			return (-1);
 	}
 	return (0);
 }

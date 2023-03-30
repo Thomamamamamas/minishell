@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:39:47 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/25 16:55:36 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/30 18:47:10 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PARSER_H
@@ -65,6 +65,7 @@ t_ast		*get_next_ast_node(t_parser *parser);
 void		init_ast_iteration(t_parser *parser);
 int			last_node_was_pipe(t_parser *parser);
 //parsing_debug
-void	print_ast(t_ast *node, int space);
+void		print_parser(t_parser *parser);
+void		print_ast(t_ast *node, int space);
 
 #endif
