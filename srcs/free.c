@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 14:38:48 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/30 18:47:04 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/31 18:22:49 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,21 @@ void	free_line_utils(t_prog *prog, char *line)
 	if (prog->parser->error_value)
 		free(prog->parser->error_value);
 	free(prog->parser);
-	free(line);
+	if (line)
+		free(line);
+}
+
+void	free_2d_char(char **array)
+{
+	int	n;
+
+	n = 0;
+	while (array[n])
+	{
+		if (array[n])
+			free(array[n]);
+		n++;
+	}
 }
 
 void	free_token(void *token)
@@ -45,24 +59,4 @@ void	free_ast(t_ast *ast)
 			free(ast->content);
 		free(ast);
 	}
-}
-
-void	free_cmd(void *content)
-{
-	t_cmd		*cmd;
-	t_redirec	*redirec;
-	int			n;
-
-	cmd = (t_cmd *)content;
-	n = 0;
-	free_2d_char(cmd->cmd);
-}
-
-void	free_2d_char(char **array)
-{
-	int	n;
-
-	n = 0;
-	while (array[n])
-		free(array[n++]);
 }

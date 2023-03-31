@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:13:14 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/03 11:10:06 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/31 15:16:42 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	get_syntax_error(t_parser *parser, t_list *actual, t_list *next)
 			parser->error_code = SYNTAX_ERROR;
 		else if (actual_tok->token == TOKEN_PIPE && next_tok->token == TOKEN_PIPE)
 			parser->error_code = SYNTAX_ERROR;
-		else if (parser->error_code == SYNTAX_ERROR)
+		if (parser->error_code == SYNTAX_ERROR)
 			parser->error_value = ft_strdup(actual_tok->value);
 	}
 	if (next == NULL && (actual_tok->token == TOKEN_REDIRECT || actual_tok->token == TOKEN_PIPE))

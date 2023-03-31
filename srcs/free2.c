@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/03 15:30:09 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/31 18:22:48 by tcasale          ###   ########.fr       */
+/*   Created: 2023/03/31 12:26:45 by tcasale           #+#    #+#             */
+/*   Updated: 2023/03/31 12:31:02 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../headers/minishell.h"
 
-void	execute_line(t_prog *prog)
+#include "../headers/minishell.h"
+
+void	free_cmd(void *content)
 {
-	t_list	*cmd_list;
+	t_cmd		*cmd;
+	int			n;
 
-	init_ast_iteration(prog->parser);
-	cmd_list = NULL;
-	cmd_list = ast_to_commands(prog->parser->actual, cmd_list);
-	print_cmds(cmd_list);
-	printf("____OPEN____\n");
-	open_all_files(cmd_list);
-	printf("____EXECUTE____\n");
-	ft_lstclear(&cmd_list, &free_cmd);
+	cmd = (t_cmd *)content;
+	n = 0;
+	free_2d_char(cmd->cmd);
+	ft_lstclear(&cmd->redir_list, &free_redirec);
 }
+
+void	free_redirec(void *content)
+{
+	t_redirec	*redirec;
+
+	redirec = (t_redirec *)content;
+	if (redirec->file_name)
+		free(redirec->file_name);
+	free(redirec);
+}
+

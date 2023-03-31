@@ -6,14 +6,13 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:50:32 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/30 16:48:20 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/31 15:17:10 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/parser.h"
 
 void	parsing(t_lex *lexer, t_parser *parser)
 {
-	parser
 	parser->error_code = 0;
 	check_syntax_error(lexer, parser);
 	if (parser->error_code == 0)
@@ -29,6 +28,7 @@ void	check_syntax_error(t_lex *lexer, t_parser *parser)
 	t_list	*next;
 
 	actual = lexer->token_lst;
+	parser->error_code = 0;
 	while (actual)
 	{
 		next = actual->next;
@@ -37,6 +37,8 @@ void	check_syntax_error(t_lex *lexer, t_parser *parser)
 			return ;
 		actual = next;
 	}
+	if (parser->error_code == 0)
+		parser->error_value = NULL;
 }
 
 void	parse_line(t_lex *lexer, t_parser *parser)

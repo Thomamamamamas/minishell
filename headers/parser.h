@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:39:47 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/30 18:47:10 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/31 10:05:24 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PARSER_H
@@ -14,37 +14,9 @@
 
 #include "../srcs/libftprintf/libft/libft.h"
 #include "lexer.h"
+#include "struct.h"
 
 # define SYNTAX_ERROR	1
-
-typedef enum ast_type
-{
-	PIPE_NODE,
-	CMD_NODE,
-	ARG_NODE,
-	REDIRECT_INPUT_NODE,
-	REDIRECT_OUTPUT_NODE,
-	ERROR_NODE
-}	e_ast_type;
-
-typedef struct s_ast
-{
-	e_ast_type		type;
-	char			*content;
-	struct s_ast	*l_child;
-	struct s_ast	*r_child;
-}					t_ast;
-
-typedef struct s_parser
-{
-	struct s_ast	*ast;
-	struct s_ast	*last_pipe_ast;
-	struct s_ast	*actual;
-	int				nb_pipes;
-	int				actual_pipe;
-	int				error_code;
-	char			*error_value;
-}					t_parser;
 
 //parsing
 void		parsing(t_lex *lexer, t_parser *parser);

@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:45:34 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/30 18:47:04 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/03/31 18:22:49 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ void	lexing(char *line, t_lex *lexer)
 {
 	int		n;
 	t_token	*token;
-	t_list	*new;
 
 	n = 0;
+	lexer->token_lst = NULL;
 	while (line[n])
 	{
 		while (line[n] && is_space(line[n]))
 			n++;
 		if (line[n])
 		{
+			ft_printf("%d\n", ft_lstsize(lexer->token_lst));
 			token = create_token(line, n);
+			ft_printf("%d\n", ft_lstsize(lexer->token_lst));
 			ft_lstadd_back(&lexer->token_lst, ft_lstnew(token));
-			new = ft_lstlast(lexer->token_lst);
-			token = (t_token *)new->content;
 			n = n + ft_strlen(token->value);
 		}
 	}
@@ -41,7 +41,7 @@ t_token	*create_token(char *line, int n)
 	t_token	*token;
 	token = (t_token *)malloc(sizeof(t_token));
 	if (n == -1)
-		token->value = "";
+		token->value = ft_strdup("");
 	else
 	token->value = get_token_value(line, n);
 	token->token = get_token_type(token->value);
