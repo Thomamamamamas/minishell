@@ -6,22 +6,30 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 14:38:48 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/31 18:22:49 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/05 18:19:50 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-void	free_line_utils(t_prog *prog, char *line)
+void	free_line_utils(char *line)
+{
+	if (line)
+		free(line);
+}
+
+void	free_lexer(t_prog *prog)
 {
 	ft_lstclear(&prog->lexer->token_lst, &free_token);
 	free(prog->lexer);
+}
+
+void	free_parser(t_prog *prog)
+{
 	free_ast(prog->parser->ast);
 	if (prog->parser->error_value)
 		free(prog->parser->error_value);
 	free(prog->parser);
-	if (line)
-		free(line);
 }
 
 void	free_2d_char(char **array)

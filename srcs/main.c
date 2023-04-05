@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 14:58:18 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/31 18:22:47 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/05 18:29:15 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../headers/minishell.h"
@@ -27,25 +27,24 @@ int	main(int argc, char **argv,char **envp)
 		if (line && !blank_line(line))
 		{
 			line = ft_strclear(line);
-			printf("a\n");
 			add_history(line);
 			prog.lexer = (t_lex *)malloc(sizeof(t_lex));
-			printf("b\n");
 			lexing(line, prog.lexer);
-			printf("bb\n");
-			print_tokens(prog.lexer);
-			printf("c\n");
+			//print_tokens(prog.lexer);
 			prog.parser = (t_parser *)malloc(sizeof(t_parser));
 			parsing(prog.lexer, prog.parser);
-			printf("d\n");
+			free_lexer(&prog);
 			if (prog.parser->error_code == 0)
 			{
-				print_parser(prog.parser);
+				//print_parser(prog.parser);
+				get_command_list(&prog);
+				free_parser(&prog);
+				//print_cmds(prog->cmd_list);
 				execute_line(&prog);
 			}
 			else
 				parsing_error_gestion(prog.parser);
-			free_line_utils(&prog, line);
+			free_line_utils(line);
 		}
 	}
 	return (0);

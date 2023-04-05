@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:50:31 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/31 14:54:44 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/05 10:04:38 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
@@ -63,7 +63,7 @@ int	open_outfile(t_redirec *redirec)
 	return (open(redirec->file_name, O_CREAT | O_RDWR, 0644));
 }
 
-int	check_files_exist(t_list *lst)
+int	check_files_valid(t_list *lst)
 {
 	t_redirec	*redirec;
 

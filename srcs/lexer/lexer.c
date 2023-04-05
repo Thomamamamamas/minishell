@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:45:34 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/31 18:22:49 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/05 18:07:43 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ void	lexing(char *line, t_lex *lexer)
 			n++;
 		if (line[n])
 		{
-			ft_printf("%d\n", ft_lstsize(lexer->token_lst));
 			token = create_token(line, n);
-			ft_printf("%d\n", ft_lstsize(lexer->token_lst));
 			ft_lstadd_back(&lexer->token_lst, ft_lstnew(token));
 			n = n + ft_strlen(token->value);
 		}

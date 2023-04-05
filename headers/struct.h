@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:58:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/31 18:22:51 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/05 11:22:46 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PROG_H
@@ -17,15 +17,12 @@ typedef struct s_prog
 {
 	struct s_lex	*lexer;
 	struct s_parser	*parser;
+	t_list			*cmd_list;
+	int				nb_cmd;
+	int				**fds;
 	int				error;
 	char			**envp;
-	struct s_cmd		*cmds;
-	int				nb_cmd;
 	char			**path;
-	int				cmd_heredoc;
-	int				cmd_infile;
-	int				cmd_outfile;
-	int				cmd_outfile_a;
 }					t_prog;
 
 //lexer
@@ -88,12 +85,12 @@ typedef struct s_redirec
 	int		fd;
 	char	*file_name;
 	int		is_invalid;
-}		t_redirec;
+}			t_redirec;
 
 typedef struct s_cmd
 {
-	char		**cmd;
-	t_list		*redir_list;
-}				t_cmd;
+	char	**cmd;
+	t_list	*redir_list;
+}			t_cmd;
 
 #endif
