@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 04:14:54 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/30 12:42:56 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/06 10:40:29 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,45 +27,45 @@ void	print_ast(t_ast *node, int space)
 	{
 		while (n++ < space)
 		{
-			ft_printf(" ");
+			printf(" ");
 		}
 	}
 	if (!node)
 	{
-		ft_printf("EOF\n");
+		printf("EOF\n");
 		return ;
 	}
 	switch(node->type)
 	{
 		case PIPE_NODE:
-			ft_printf("PIPE\n");
+			printf("PIPE\n");
 			print_ast(node->l_child, space + 1);
 			print_ast(node->r_child, space + 1);
 			break ;
 		case REDIRECT_INPUT_NODE:
-			ft_printf("REDIRECTION INPUT : %s ", node->content);
+			printf("REDIRECTION INPUT : %s ", node->content);
 			print_ast(node->l_child, space);
 			break ;
 		case REDIRECT_OUTPUT_NODE:
-			ft_printf("REDIRECTION OUTPUT : %s ", node->content);
+			printf("REDIRECTION OUTPUT : %s ", node->content);
 			print_ast(node->l_child, space);
 			break ;
 		case CMD_NODE:
-			ft_printf("COMMANDE : %s ", node->content);
-			if (node->l_child == NULL)
+			printf("COMMANDE : %s ", node->content);
+			if (!node->l_child)
 				printf("\n");
 			print_ast(node->l_child, space + 1);
 			break ;
 		case ARG_NODE:
-			ft_printf("%s ", node->content);
-			if (node->l_child == NULL)
+			printf("%s ", node->content);
+			if (!node->l_child)
 				printf("\n");
 			else if (node->l_child->type != ARG_NODE)
 				printf("\n");
 			print_ast(node->l_child, space + 1);
 			break ;
 		default:
-			ft_printf("\n");
+			printf("\n");
 			break ;
 	}
 }

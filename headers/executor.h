@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:51:38 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/05 18:24:15 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/06 08:44:16 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EXECUTOR_H
@@ -21,17 +21,14 @@ void			execute_line(t_prog *prog);
 t_list			*ast_to_commands(t_ast *ast, t_list *cmd_list);
 t_list			*command_node(t_ast *ast);
 t_list			*command_redirection_node(t_ast *actual, t_cmd *cmd);
-int				is_cmd_node(t_ast *ast);
 //command_utils
 int				get_nb_arg_cmd(t_ast *ast);
 char			*get_correct_path(t_cmd *cmd, char **env);
 int				check_cmd_file_valid(char *file_name);
 t_redirec		*get_last_cmd_redir(t_list *lst, int io);
 //files
-void			open_all_files(t_list *cmd_list);
-void			open_file(t_list *lst);
-int				open_outfile(t_redirec *redirec);
-int				check_files_valid(t_list *lst);
+void			open_all_redirec_files(t_ast **ast);
+int				files_not_valid(t_ast *ast);
 //pipes
 int				command_forks(t_prog *prog);
 int				execute_process(t_prog *prog, t_cmd *cmd, int n);

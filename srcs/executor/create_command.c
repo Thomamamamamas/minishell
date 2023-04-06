@@ -6,23 +6,23 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 01:17:36 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/30 15:13:00 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/06 08:45:22 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
 
 t_list	*ast_to_commands(t_ast *ast, t_list *cmd_list)
 {
-	if (is_cmd_node(ast))
+	if (ast->type != PIPE_NODE)
 	{
 		ft_lstadd_back(&cmd_list, command_node(ast));
-		while (is_cmd_node(ast))
+		while (ast->type != PIPE_NODE)
 			ast = ast->l_child;
 	}
 	if (ast && ast->l_child)
-		cmd_list = ast_to_commands(ast->l_child, cmd_list);
+		cmd_list = ast_to_commands(&*ast->l_child, cmd_list);
 	if (ast && ast->r_child)
-		cmd_list = ast_to_commands(ast->r_child, cmd_list);
+		cmd_list = ast_to_commands(&*ast->r_child, cmd_list);
 	return (cmd_list);
 }
 
@@ -74,16 +74,4 @@ t_list	*command_redirection_node(t_ast *actual, t_cmd *cmd)
 		redirec->file_name = ft_strdup(actual->content);
 	ft_lstadd_back(&cmd->redir_list, ft_lstnew(redirec)); 
 	return (cmd->redir_list);
-}
-
-int	is_cmd_node(t_ast *ast)
-{
-	if (ast)
-	{
-		if (ast->type == REDIRECT_INPUT_NODE || ast->type == REDIRECT_OUTPUT_NODE)
-			return (1);
-		if (ast->type == CMD_NODE || ast->type == ARG_NODE)
-			return (1);
-	}
-	return (0);
 }

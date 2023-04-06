@@ -6,73 +6,50 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:50:31 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/05 10:04:38 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/06 10:40:23 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
 
-void	open_all_files(t_list *cmd_list)
+void	open_all_redirec_files(t_ast **ast)
 {
-	t_list		*lst;
-	t_list		*sub_lst;
-	t_cmd		*cmd;
+	t_ast	*actual;
 
-	lst = cmd_list;
-	while (lst)
+	actual = *ast;
+	if (actual->type == REDIRECT_INPUT_NODE || actual->type == REDIRECT_OUTPUT_NODE)
 	{
-		cmd = (t_cmd *)lst->content;
-		sub_lst = cmd->redir_list;
-		while (sub_lst)
+		if (access(actual->content, F_OK))
 		{
-			open_file(sub_lst);
-			t_redirec	*redirec = (t_redirec *)sub_lst->content;
-			printf("%s\n", redirec->file_name);
-			sub_lst = sub_lst->next;
+			if (ft_strcmp(actual->content, "<") == 0)
+				actual->value = open(actual->l_child->content, O_RDONLY);
+			if (ft_strcmp(actual->content, ">>") == 0)
+				actual->value = open(actual->l_child->content, O_RDWR | O_APPEND);
+			if (ft_strcmp(actual->content, ">") == 0)
+				actual->value = open(actual->l_child->content, O_RDWR | O_TRUNC);
 		}
-		lst = lst->next;
+		else if (ft_strcmp(actual->content, "<") != 0)
+			actual->value = open(actual->l_child->content, O_RDWR | 0644);
+		printf("fd = %d\n", actual->value);
 	}
+	if (actual && actual->l_child)
+		open_all_redirec_files(&actual->l_child);
+	if (actual && actual->r_child)
+		open_all_redirec_files(&actual->r_child);
 }
 
-void	open_file(t_list *lst)
+int	files_not_valid(t_ast *ast)
 {
-	t_redirec	*redirec;
+	int	res;
 
-	redirec = (t_redirec *)lst->content;
-	if (access(redirec->file_name, F_OK) && redirec->infile)
-		redirec->fd = open(redirec->file_name, O_RDONLY);
-	else
+	res = 0;
+	if (ast->type == REDIRECT_INPUT_NODE || ast->type == REDIRECT_OUTPUT_NODE)
 	{
-		if (redirec->infile == 1)
-		{
-			redirec->is_invalid = 1;
-			redirec->fd = -1;
-		}
-		else
-			redirec->fd = open_outfile(redirec);
+		if (ast->value == -1)
+			res = 1;
 	}
-}
-
-int	open_outfile(t_redirec *redirec)
-{
-	if (access(redirec->file_name, F_OK))
-	{
-		if (redirec->append == 1)
-			return (open(redirec->file_name, O_RDWR | O_APPEND));
-		return (open(redirec->file_name, O_RDWR | O_TRUNC));
-	}
-	return (open(redirec->file_name, O_CREAT | O_RDWR, 0644));
-}
-
-int	check_files_valid(t_list *lst)
-{
-	t_redirec	*redirec;
-
-	while (lst)
-	{
-		redirec = (t_redirec *)lst->content;
-		if (redirec->is_invalid)
-			return (0);
-		lst = lst->next;
-	}
-	return (1);
+	if (ast && ast->l_child)
+		res = res + files_not_valid(ast->l_child);
+	if (ast && ast->r_child)
+		res = res + files_not_valid(ast->r_child);
+	return (res);
 }

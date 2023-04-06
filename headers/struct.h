@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:58:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/05 11:22:46 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/06 08:09:26 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PROG_H
@@ -60,6 +60,7 @@ typedef struct s_ast
 {
 	e_ast_type		type;
 	char			*content;
+	int				value;
 	struct s_ast	*l_child;
 	struct s_ast	*r_child;
 }					t_ast;

@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:50:07 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/30 12:16:14 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/06 08:49:51 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_ast	*create_child_pipe(t_ast *parent)
 	child = (t_ast *)malloc(sizeof(t_ast));
 	child->type = PIPE_NODE;
 	child->content = NULL;
+	child->value = 0;
 	child->r_child = NULL;
 	child->l_child = NULL;
 	parent->r_child = child;
@@ -77,6 +78,7 @@ void	init_first_ast_node(t_ast *res, t_token *token)
 	}
 	else
 		res->type = ERROR_NODE;
+	res->value = -1;
 }
 
 void	init_ast_node(t_ast *res, t_ast *parent,  t_token *token)
@@ -103,4 +105,5 @@ void	init_ast_node(t_ast *res, t_ast *parent,  t_token *token)
 	}
 	else
 		res->type = ERROR_NODE;
+	res->value = -1;
 }
