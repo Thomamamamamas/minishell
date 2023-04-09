@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:14:33 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/05 16:21:34 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/09 15:25:42 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,65 +14,66 @@
 
 int	command_forks(t_prog *prog)
 {
-	t_list	*actual_cmd;
-	t_cmd	*cmd;
+	t_ast	*actual;
 	int		n;
 	int		res;
 	int		*ids;
 
 	res = 1;
-	ids = (int *)malloc(sizeof(int) * prog->nb_cmd);
+	printf("nombres de pipes : %d\n", prog->parser->nb_pipes);
+	ids = (int *)malloc(sizeof(int) * prog->parser->nb_pipes);
 	prog->fds = pipes_2d_fd(prog);
 	n = 0;
-	actual_cmd = prog->cmd_list;
-	ft_putstr_fd("pute\n", 2);
-	while (prog->nb_cmd > 1 && n < prog->nb_cmd - 1)
+	actual = prog->parser->ast;
+	while (actual && n < prog->parser->nb_pipes - 1)
 	{
-		cmd = (t_cmd *)actual_cmd->content;
 		ids[n] = fork();
 		if (ids[n] == -1)
 			return (1);
 		if (ids[n] == 0)
 			if (wait_subprocesses(prog, n) == 0)
-				execute_process(prog, cmd, n);
+				execute_process(prog, actual, n);
+		actual = get_next_pipe(prog->parser);
 		n++;
-		actual_cmd = actual_cmd->next;
 	}
 	free(ids);
-	if (prog->nb_cmd > 1 && actual_cmd)
-		actual_cmd = actual_cmd->next;
-	if (actual_cmd)
-		cmd = (t_cmd *)actual_cmd->content;
+	if (prog->parser->nb_pipes < 1)
+		actual = prog->parser->ast;
+	else
+		actual = get_next_pipe(prog->parser);
 	if (wait_subprocesses(prog, n) == 0)
-		res = execute_process(prog, cmd, n);
+		res = execute_process(prog, actual, n);
 	return (res);
 }
 
-int	execute_process(t_prog *prog, t_cmd *cmd, int n)
+int	execute_process(t_prog *prog, t_ast *ast, int n)
 {
 	char	*path;
 	int		id;
 
+	printf("try close unused\n");
 	close_unused(prog, n);
-	if (dup_correct_fd(prog, n) == -1)
+	printf("close unused\n");
+	if (dup_correct_fd(prog, ast, n) == -1)
 		exit(EXIT_FAILURE);
-	path = get_correct_path(cmd, prog->path);
+	printf("dup correct fd\n");
+	path = get_correct_path(ast, prog->path);
 	ft_putstr_fd(path, 2);
 	if (path == NULL || check_cmd_file_valid(path) != 0)
 	{
 		free(path);
-		end_close_pipes(cmd, prog->fds, n);
+		end_close_pipes(ast, prog->fds, n);
 		if (n == prog->nb_cmd - 1)
 			return (-7);
 		exit(EXIT_FAILURE);
 	}
 	id = fork();
 	if (id == 0)
-		execve(path, cmd->cmd, prog->envp);
+		execve(path, &ast->content, prog->envp);
 	wait(NULL);
 	free(path);
-	end_close_pipes(cmd, prog->fds, n);
-	if (n == prog->nb_cmd - 1)
+	end_close_pipes(ast, prog->fds, n);
+	if (n == prog->parser->nb_pipes - 1)
 		return (0);
 	exit(EXIT_SUCCESS);
 }

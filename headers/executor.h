@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:51:38 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/06 08:44:16 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/09 15:25:48 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EXECUTOR_H
@@ -23,7 +23,7 @@ t_list			*command_node(t_ast *ast);
 t_list			*command_redirection_node(t_ast *actual, t_cmd *cmd);
 //command_utils
 int				get_nb_arg_cmd(t_ast *ast);
-char			*get_correct_path(t_cmd *cmd, char **env);
+char			*get_correct_path(t_ast *ast, char **env);
 int				check_cmd_file_valid(char *file_name);
 t_redirec		*get_last_cmd_redir(t_list *lst, int io);
 //files
@@ -31,12 +31,12 @@ void			open_all_redirec_files(t_ast **ast);
 int				files_not_valid(t_ast *ast);
 //pipes
 int				command_forks(t_prog *prog);
-int				execute_process(t_prog *prog, t_cmd *cmd, int n);
+int				execute_process(t_prog *prog, t_ast *ast, int n);
 //pipes_fd
 void			close_unused(t_prog *prog, int i);
-void			end_close_pipes(t_cmd *cmd, int **fds, int n);
+void			end_close_pipes(t_ast *ast, int **fds, int n);
 int				**pipes_2d_fd(t_prog *prog);
-int				dup_correct_fd(t_prog *prog, int n);
+int				dup_correct_fd(t_prog *prog, t_ast *ast, int n);
 int				wait_subprocesses(t_prog *prog, int n);
 //executor_debug
 void			print_cmds(t_list *list_cmd);

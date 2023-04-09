@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 14:58:18 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/06 09:21:50 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/08 17:37:39 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../headers/minishell.h"
@@ -37,7 +37,6 @@ int	main(int argc, char **argv,char **envp)
 			if (prog.parser->error_code == 0)
 			{
 				print_parser(prog.parser);
-				//print_cmds(prog->cmd_list);
 				execute_line(&prog);
 				free_parser(&prog);
 			}

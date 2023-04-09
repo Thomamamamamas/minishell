@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:39:47 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/31 10:05:24 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/09 15:25:47 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PARSER_H
@@ -33,9 +33,10 @@ t_ast		*create_child_pipe(t_ast *parent);
 void		init_first_ast_node(t_ast *res, t_token *token);
 void		init_ast_node(t_ast *res, t_ast *parent, t_token *token);
 //ast_utils
-t_ast		*get_next_ast_node(t_parser *parser);
 void		init_ast_iteration(t_parser *parser);
-int			last_node_was_pipe(t_parser *parser);
+t_ast		*get_next_pipe(t_parser *parser);
+int			is_redirec_node(t_ast *ast);
+t_ast		*get_last_redirec_node(t_ast *ast, int mode);
 //parsing_debug
 void		print_parser(t_parser *parser);
 void		print_ast(t_ast *node, int space);

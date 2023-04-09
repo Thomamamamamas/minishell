@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 22:31:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/05 17:56:03 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/09 08:31:28 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
@@ -27,29 +27,29 @@ int	get_nb_arg_cmd(t_ast *ast)
 	return (n);
 }
 
-char	*get_correct_path(t_cmd *cmd, char **env)
+char	*get_correct_path(t_ast *ast, char **env)
 {
 	int		n;
 	char	*tmp;
 	char	*actual_path;
 
-	if (cmd->cmd[0])
+	if (ast->content)
 	{
-		if (access(cmd->cmd[0], F_OK | X_OK) == 0)
-			return (cmd->cmd[0]);
+		if (access(ast->content, F_OK | X_OK) == 0)
+			return (ast->content);
 	}
 	n = 0;
 	while (env[n] != NULL)
 	{
 		tmp = ft_strjoin(env[n], "/");
-		actual_path = ft_strjoin(tmp, cmd->cmd[0]);
+		actual_path = ft_strjoin(tmp, ast->content);
 		free(tmp);
 		if (access(actual_path, F_OK | X_OK) == 0)
 			return (actual_path);
 		free(actual_path);
 		n++;
 	}
-	return (cmd->cmd[0]);
+	return (ast->content);
 }
 
 int	check_cmd_file_valid(char *file_name)
