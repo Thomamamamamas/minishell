@@ -6,11 +6,26 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:13:14 by tcasale           #+#    #+#             */
-/*   Updated: 2023/03/31 15:16:42 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/27 11:22:59 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/parser.h"
+
+void	check_syntax_start(t_parser *parser, t_list *actual)
+{
+	t_token	*actual_tok;
+
+	if (actual)
+	{
+		actual_tok = (t_token *)actual->content;
+		if (actual_tok->token == TOKEN_PIPE)
+		{
+			parser->error_code = SYNTAX_ERROR;
+			parser->error_value = ft_strdup(actual_tok->value);
+		}
+	}
+}
 
 void	get_syntax_error(t_parser *parser, t_list *actual, t_list *next)
 {

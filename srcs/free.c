@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 14:38:48 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/05 18:19:50 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/22 22:46:32 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@ void	free_line_utils(char *line)
 {
 	if (line)
 		free(line);
-}
-
-void	free_lexer(t_prog *prog)
-{
-	ft_lstclear(&prog->lexer->token_lst, &free_token);
-	free(prog->lexer);
 }
 
 void	free_parser(t_prog *prog)

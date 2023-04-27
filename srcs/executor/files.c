@@ -6,12 +6,12 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:50:31 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/09 12:20:49 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/27 13:38:26 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
 
-void	open_all_redirec_files(t_ast **ast)
+void	open_all_redirec_files(t_prog *prog, t_ast **ast)
 {
 	t_ast	*actual;
 
@@ -29,26 +29,30 @@ void	open_all_redirec_files(t_ast **ast)
 		}
 		else if (actual->l_child->content && ft_strcmp(actual->content, "<") != 0)
 			actual->value = open(actual->l_child->content, O_RDWR | 0644);
+		else if (prog->error_code == 0)
+		{
+			prog->error_code = 1;
+			prog->error_value = ft_strdup(actual->l_child->content);
+		}
 	}
 	if (actual && actual->l_child)
-		open_all_redirec_files(&actual->l_child);
+		open_all_redirec_files(prog, &actual->l_child);
 	if (actual && actual->r_child)
-		open_all_redirec_files(&actual->r_child);
+		open_all_redirec_files(prog, &actual->r_child);
 }
 
-int	files_not_valid(t_ast *ast)
+void	check_files_valid(t_prog *prog, t_ast *ast)
 {
-	int	res;
-
-	res = 0;
 	if (ast->type == REDIRECT_INPUT_NODE || ast->type == REDIRECT_OUTPUT_NODE)
 	{
-		if (ast->value == -1)
-			res = 1;
+		if (ast->value == -1 && prog->error_code == 0)
+		{
+			prog->error_code = 2;
+			prog->error_value = ft_strdup(ast->content);
+		}
 	}
 	if (ast && ast->l_child)
-		res = res + files_not_valid(ast->l_child);
+		check_files_valid(prog, ast->l_child);
 	if (ast && ast->r_child)
-		res = res + files_not_valid(ast->r_child);
-	return (res);
+		check_files_valid(prog, ast->r_child);
 }

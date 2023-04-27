@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:58:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/06 08:09:26 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/27 13:36:46 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PROG_H
@@ -20,7 +20,8 @@ typedef struct s_prog
 	t_list			*cmd_list;
 	int				nb_cmd;
 	int				**fds;
-	int				error;
+	int				error_code;
+	char			*error_value;
 	char			**envp;
 	char			**path;
 }					t_prog;

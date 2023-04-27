@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 22:31:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/09 08:31:28 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/27 15:08:47 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
@@ -61,19 +61,18 @@ int	check_cmd_file_valid(char *file_name)
 	return (0);
 }
 
-t_redirec	*get_last_cmd_redir(t_list *lst, int io)
+char	**create_cmd_from_ast(t_ast *ast)
 {
-	t_redirec	*redir;
-	t_redirec	*res;
+	char	**cmd;
+	int		n;
 
-	res = NULL;
-	while (lst)
+	n = 0;
+	cmd = (char **)malloc(sizeof(char) * get_nb_arg_cmd(ast) + 2);
+	cmd[get_nb_arg_cmd(ast) + 2] = NULL;
+	while (ast && (ast->type == CMD_NODE || ast->type == ARG_NODE))
 	{
-		redir = (t_redirec *)lst->content;
-		if (io == 0 && redir->infile == 1)
-			res = redir;
-		if (io == 1 && redir->outfile == 1)
-			res = redir;
+		cmd[n++] = ft_strdup(ast->content);
+		ast = ast->l_child;
 	}
-	return (res);
+	return (cmd);
 }

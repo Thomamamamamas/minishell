@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 14:58:18 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/08 17:37:39 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:18:15 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../headers/minishell.h"
@@ -33,15 +33,15 @@ int	main(int argc, char **argv,char **envp)
 			print_tokens(prog.lexer);
 			prog.parser = (t_parser *)malloc(sizeof(t_parser));
 			parsing(prog.lexer, prog.parser);
-			free_lexer(&prog);
+			parsing_error_gestion(prog.parser);
 			if (prog.parser->error_code == 0)
 			{
 				print_parser(prog.parser);
 				execute_line(&prog);
 				free_parser(&prog);
+				return (1);
 			}
-			else
-				parsing_error_gestion(prog.parser);
+			error_gestion(&prog);
 			free_line_utils(line);
 		}
 	}

@@ -6,13 +6,13 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:14:37 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/09 15:25:43 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/27 13:58:12 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	close_unused(t_prog *prog, int i)
+void	close_unused_multi(t_prog *prog, int i)
 {
 	int		j;
 	int		tmp_actual_pipe;
@@ -45,7 +45,7 @@ void	close_unused(t_prog *prog, int i)
 	prog->parser->last_pipe_ast = tmp_last_pipe_ast;
 }
 
-void	end_close_pipes(t_ast *ast, int **fds, int n)
+void	end_close_fd_multi(t_ast *ast, int **fds, int n)
 {
 	close(fds[n][0]);
 	close(fds[n + 1][1]);
@@ -69,7 +69,7 @@ int	**pipes_2d_fd(t_prog *prog)
 	return (fds);
 }
 
-int	dup_correct_fd(t_prog *prog, t_ast *ast, int n)
+int	dup_correct_fd_multi(t_prog *prog, t_ast *ast, int n)
 {
 	t_ast	*infile_node;
 	t_ast	*outfile_node;

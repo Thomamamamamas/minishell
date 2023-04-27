@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:18:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/09 15:25:42 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:55:17 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@ void	init_ast_iteration(t_parser *parser)
 	parser->actual_pipe = 0;
 	if (parser->nb_pipes != 0)
 		parser->last_pipe_ast = parser->actual;
+}
+
+t_ast	*get_next_cmd(t_parser *parser)
+{
+	while (parser->actual)
+	{
+		if (parser->actual->type == CMD_NODE)
+			return (parser->actual);
+		parser->actual = parser->actual->l_child;
+	}
+	return (NULL);
 }
 
 t_ast	*get_next_pipe(t_parser *parser)

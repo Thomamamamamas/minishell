@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:51:33 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/08 17:37:46 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:58:34 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
@@ -33,7 +33,6 @@ char			**get_path_variable(char **envp);
 int				blank_line(char *line);
 //free
 void			free_line_utils(char *line);
-void			free_lexer(t_prog *prog);
 void			free_parser(t_prog *prog);
 void			free_2d_char(char **array);
 void			free_token(void *token);
@@ -43,5 +42,7 @@ void			free_cmd(void *content);
 void			free_redirec(void *content);
 //error_gestion
 void			parsing_error_gestion(t_parser *parser);
+int				exec_error_gestion(int error_code, char *error_value);
+void			error_gestion(t_prog *prog);
 
 #endif
