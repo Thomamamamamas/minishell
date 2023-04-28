@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:14:33 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/27 15:11:49 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/28 10:51:27 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,10 @@ int	execute_process(t_prog *prog, t_ast *ast, int n)
 	char	*path;
 	int		id;
 
-	printf("try close unused\n");
 	close_unused_multi(prog, n);
-	printf("close unused\n");
 	if (dup_correct_fd_multi(prog, ast, n) == -1)
 		exit(EXIT_FAILURE);
-	printf("dup correct fd\n");
 	path = get_correct_path(ast, prog->path);
-	printf("get correct path\n");
-	ft_putstr_fd(path, 2);
 	if (path == NULL || check_cmd_file_valid(path) != 0)
 	{
 		free(path);

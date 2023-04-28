@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:51:38 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/27 15:11:51 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/28 17:13:07 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EXECUTOR_H
@@ -17,13 +17,13 @@
 //executor
 void			get_command_list(t_prog *prog);
 void			execute_line(t_prog *prog);
-int				execute_single_cmd(t_prog *prog);
+int			execute_single_cmd(t_prog *prog);
 void			execute_multi_cmd(t_prog *prog);
 //single_cmd_utils
 int				dup_correct_fd(t_ast *ast);
 void			end_close_fd(t_ast *ast);
 //command_utils
-int				get_nb_arg_cmd(t_ast *ast);
+int				get_cmd_len(t_ast *ast);
 char			*get_correct_path(t_ast *ast, char **env);
 int				check_cmd_file_valid(char *file_name);
 char			**create_cmd_from_ast(t_ast *ast);

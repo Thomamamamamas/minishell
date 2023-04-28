@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:50:31 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/27 13:38:26 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/28 15:00:16 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
@@ -45,7 +45,7 @@ void	check_files_valid(t_prog *prog, t_ast *ast)
 {
 	if (ast->type == REDIRECT_INPUT_NODE || ast->type == REDIRECT_OUTPUT_NODE)
 	{
-		if (ast->value == -1 && prog->error_code == 0)
+		if (ast->value < 0 && prog->error_code == 0)
 		{
 			prog->error_code = 2;
 			prog->error_value = ft_strdup(ast->content);

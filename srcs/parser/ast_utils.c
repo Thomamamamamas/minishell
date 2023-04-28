@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:18:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/27 14:55:17 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/28 10:51:55 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,5 @@ t_ast	*get_last_redirec_node(t_ast *ast, int mode)
 			last_redirec = actual;
 		actual = actual->l_child;
 	}
-	if (last_redirec)
-		printf("fd = %d\n", last_redirec->value);
 	return (last_redirec);
 }

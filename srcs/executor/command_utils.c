@@ -6,16 +6,16 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 22:31:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/27 15:11:47 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/04/28 17:13:04 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
 
-int	get_nb_arg_cmd(t_ast *ast)
+int	get_cmd_len(t_ast *ast)
 {
 	int	n;
 
-	n = 0;
+	n = 1;
 	while (ast)
 	{
 		ast = ast->l_child;
@@ -54,21 +54,25 @@ char	*get_correct_path(t_ast *ast, char **env)
 
 int	check_cmd_file_valid(char *file_name)
 {
+	if (file_name == NULL)
+		return (1);
 	if (access(file_name, F_OK) != 0)
-		return (-7);
+		return (1);
 	if (access(file_name, X_OK) != 0)
-		return (-5);
+		return (1);
 	return (0);
 }
 
 char	**create_cmd_from_ast(t_ast *ast)
 {
 	char	**cmd;
+	int		len;
 	int		n;
 
 	n = 0;
-	cmd = (char **)malloc(sizeof(char) * get_nb_arg_cmd(ast) + 2);
-	cmd[get_nb_arg_cmd(ast) + 2] = NULL;
+	len = get_cmd_len(ast);
+	cmd = (char **)malloc(sizeof(char *) * len);
+	cmd[len] = NULL;
 	while (ast && (ast->type == CMD_NODE || ast->type == ARG_NODE))
 	{
 		cmd[n++] = ft_strdup(ast->content);

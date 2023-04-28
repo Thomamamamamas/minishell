@@ -6,7 +6,7 @@
 #    By: tcasale <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/18 04:51:18 by tcasale           #+#    #+#              #
-#    Updated: 2023/03/11 01:47:35 by tcasale          ###   ########.fr        #
+#    Updated: 2023/04/28 13:44:01 by tcasale          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,9 @@ all:	$(NAME)
 
 $(NAME):	$(OBJS) ./srcs/libftprintf/libftprintf.a
 			$(CC) $(OBJS) -lreadline ./srcs/libftprintf/libftprintf.a -o $(NAME)
+
+debug:	$(OBJS) ./srcs/libftprintf/libftprintf.a
+			$(CC) $(OBJS) -lreadline ./srcs/libftprintf/libftprintf.a -g -o $(NAME)
 
 bonus:	$(NAME)
 
