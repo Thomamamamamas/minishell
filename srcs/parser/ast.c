@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:50:07 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/27 14:56:04 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/05/04 11:14:42 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,13 @@ void	init_ast_node(t_ast *res, t_ast *parent,  t_token *token)
 	}
 	else if (token->token == TOKEN_WORD)
 	{
-		if (parent == NULL|| parent->type == PIPE_NODE)
-			res->type = CMD_NODE;
+		if (parent == NULL || parent->type == PIPE_NODE)
+		{
+			if (is_builtin(token->value))
+				res->type = BUILTIN_NODE;
+			else
+				res->type = CMD_NODE;
+		}
 		else if (parent->type == REDIRECT_INPUT_NODE || parent->type == REDIRECT_OUTPUT_NODE)
 			res->type = ARG_NODE;
 		else if (parent->type == CMD_NODE)

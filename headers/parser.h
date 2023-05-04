@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:39:47 by tcasale           #+#    #+#             */
-/*   Updated: 2023/05/02 12:42:05 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/05/04 11:14:01 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PARSER_H
@@ -23,6 +23,7 @@ void		parsing(t_lex *lexer, t_parser *parser);
 void		check_syntax_error(t_lex *lexer, t_parser *parser);
 void		parse_line(t_lex *lexer, t_parser *parser);
 int			get_nb_pipe(t_lex *lexer);
+int			is_builtin(char *str);
 //syntax_error
 void		check_syntax_start(t_parser *parser, t_list *actual);
 void		get_syntax_error(t_parser *parser, t_list *actual, t_list *next);

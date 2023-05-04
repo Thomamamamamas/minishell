@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:51:38 by tcasale           #+#    #+#             */
-/*   Updated: 2023/05/02 12:42:04 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:57:22 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef EXECUTOR_H
@@ -15,10 +15,10 @@
 #include "struct.h"
 
 //executor
-void			get_command_list(t_prog *prog);
-void			execute_line(t_prog *prog);
-int			execute_single_cmd(t_prog *prog);
+int				execute_line(t_prog *prog);
+int				execute_single_cmd(t_prog *prog);
 void			execute_multi_cmd(t_prog *prog);
+int				execute_builtin(t_prog *prog, t_ast *ast);
 //single_cmd_utils
 int				dup_correct_fd(t_prog *prog, t_ast *ast);
 int				redup_correct_fd(t_prog *prog, t_ast *ast);
@@ -41,6 +41,9 @@ void			end_close_fd_multi(t_ast *ast, int **fds, int n);
 int				**pipes_2d_fd(t_prog *prog);
 int				dup_correct_fd_multi(t_prog *prog, t_ast *ast, int n);
 int				wait_subprocesses(t_prog *prog, int n);
+//builtins
+int				echo(t_ast *ast);
+int				pwd(t_prog *prog);
 //executor_debug
 void			print_cmds(t_list *list_cmd);
 

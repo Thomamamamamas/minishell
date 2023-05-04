@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 23:50:32 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/28 13:23:00 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/05/04 11:16:25 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
@@ -79,3 +79,23 @@ int	get_nb_pipe(t_lex *lexer)
 	}
 	return (res);
 }
+
+int	is_builtin(char *str)
+{
+	if (!ft_strcmp(str, "echo"))
+		return (1);
+	if (!ft_strcmp(str, "cd"))
+		return (1);
+	if (!ft_strcmp(str, "pwd"))
+		return (1);
+	if (!ft_strcmp(str, "export"))
+		return (1);
+	if (!ft_strcmp(str, "unset"))
+		return (1);
+	if (!ft_strcmp(str, "env"))
+		return (1);
+	if (!ft_strcmp(str, "exit"))
+		return (1);
+	return (0);
+}
+

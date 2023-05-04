@@ -6,6 +6,8 @@ t_prog	init_shell(char **envp)
 
 	prog.path = get_path_variable(envp);
 	prog.envp = envp;
+	prog.pwd = NULL;
+	pwd(&prog);
 	return (prog);
 }
 

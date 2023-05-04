@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 16:18:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/28 10:51:55 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/05/04 11:15:56 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_ast	*get_next_cmd(t_parser *parser)
 {
 	while (parser->actual)
 	{
-		if (parser->actual->type == CMD_NODE)
+		if (parser->actual->type == CMD_NODE || parser->actual->type == BUILTIN_NODE)
 			return (parser->actual);
 		parser->actual = parser->actual->l_child;
 	}

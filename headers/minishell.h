@@ -6,13 +6,15 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:51:33 by tcasale           #+#    #+#             */
-/*   Updated: 2023/05/04 09:18:11 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:16:54 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
 #include <string.h>
+#include <dirent.h>
+#include <sys/types.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>

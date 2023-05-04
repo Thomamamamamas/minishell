@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 09:58:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/05/04 09:18:11 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:47:56 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PROG_H
@@ -17,6 +17,7 @@ typedef struct s_prog
 {
 	struct s_lex	*lexer;
 	struct s_parser	*parser;
+	char			*pwd;
 	int				fd_stdin;
 	int				fd_stdout;
 	t_list			*cmd_list;
@@ -53,6 +54,7 @@ typedef enum ast_type
 {
 	PIPE_NODE,
 	CMD_NODE,
+	BUILTIN_NODE,
 	ARG_NODE,
 	REDIRECT_INPUT_NODE,
 	REDIRECT_OUTPUT_NODE,
