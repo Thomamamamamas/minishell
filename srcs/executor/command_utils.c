@@ -6,7 +6,7 @@
 /*   By: tcasale <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 22:31:08 by tcasale           #+#    #+#             */
-/*   Updated: 2023/04/28 17:13:04 by tcasale          ###   ########.fr       */
+/*   Updated: 2023/05/04 09:18:08 by tcasale          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../headers/minishell.h"
@@ -15,14 +15,16 @@ int	get_cmd_len(t_ast *ast)
 {
 	int	n;
 
+	if (!ast)
+		return (0);
+	if (ast->type != CMD_NODE)
+		return (0);
 	n = 1;
-	while (ast)
+	ast = ast->l_child;
+	while (ast && ast->type == ARG_NODE)
 	{
+		n++;
 		ast = ast->l_child;
-		if (ast && ast->type == ARG_NODE)
-			n++;
-		else
-			return (n);
 	}
 	return (n);
 }
@@ -71,12 +73,12 @@ char	**create_cmd_from_ast(t_ast *ast)
 
 	n = 0;
 	len = get_cmd_len(ast);
-	cmd = (char **)malloc(sizeof(char *) * len);
-	cmd[len] = NULL;
+	cmd = (char **)malloc(sizeof(char *) * len + 1);
 	while (ast && (ast->type == CMD_NODE || ast->type == ARG_NODE))
 	{
 		cmd[n++] = ft_strdup(ast->content);
 		ast = ast->l_child;
 	}
+	cmd[n] = NULL;
 	return (cmd);
 }
