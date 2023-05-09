@@ -25,6 +25,7 @@ typedef struct s_prog
 	int				**fds;
 	int				error_code;
 	char			*error_value;
+	t_list			*env;
 	char			**envp;
 	char			**path;
 }					t_prog;

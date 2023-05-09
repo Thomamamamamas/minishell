@@ -104,7 +104,7 @@ void	init_ast_node(t_ast *res, t_ast *parent,  t_token *token)
 		}
 		else if (parent->type == REDIRECT_INPUT_NODE || parent->type == REDIRECT_OUTPUT_NODE)
 			res->type = ARG_NODE;
-		else if (parent->type == CMD_NODE)
+		else if (parent->type == CMD_NODE || parent->type == BUILTIN_NODE || parent->type == ARG_NODE)
 			res->type = ARG_NODE;
 		else
 			res->type = CMD_NODE;

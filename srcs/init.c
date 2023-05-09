@@ -5,10 +5,22 @@ t_prog	init_shell(char **envp)
 	t_prog	prog;
 
 	prog.path = get_path_variable(envp);
-	prog.envp = envp;
+	prog.env = make_env(envp);
 	prog.pwd = NULL;
-	pwd(&prog);
+	pwd(&prog, 0);
 	return (prog);
+}
+
+t_list	*make_env(char **envp)
+{
+	t_list	*lst;
+	int		n;
+
+	n = 0;
+	lst = NULL;
+	while (envp[n] != NULL)
+		ft_lstadd_back(&lst, ft_lstnew(ft_strdup(envp[n++])));
+	return (lst);
 }
 
 char	**get_path_variable(char **envp)

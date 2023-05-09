@@ -14,9 +14,17 @@
 int	echo(t_ast *ast)
 {
 	int		n;
+	int		opt;
 	char	last;
 
 	ast = ast->l_child;
+	if (ast && ast->type == ARG_NODE && !ft_strcmp(ast->content, "-n"))
+	{
+		ast = ast->l_child;
+		opt = 1;
+	}
+	else
+		opt = 0;
 	while (ast && ast->type == ARG_NODE)
 	{
 		n = 0;
@@ -33,10 +41,12 @@ int	echo(t_ast *ast)
 			ft_putchar(' ');
 		ast = ast->l_child;
 	}
+	if (opt == 0)
+		ft_putchar('\n');
 	return (0);
 }
 
-int	pwd(t_prog *prog)
+int	pwd(t_prog *prog, int print)
 {
 	if (prog->pwd != NULL)
 		free(prog->pwd);
@@ -46,5 +56,40 @@ int	pwd(t_prog *prog)
 		ft_putstr_fd("Error: can't get current working directory\n", 2);
 		return (1);
 	}
+	if (print == 1)
+		ft_printf("%s\n", prog->pwd);
 	return (0);
+}
+
+int	env(t_prog *prog, t_ast *ast)
+{
+	t_list	*lst;
+
+	if (ast->l_child && ast->l_child->type == ARG_NODE)
+	{
+		ft_putstr_fd("env: ", 2);
+		if (ast->l_child->content)
+			ft_putstr_fd(ast->l_child->content, 2);
+		ft_putstr_fd(": No such file or directory", 2);
+		return (127);
+	}
+	lst = prog->env;
+	while (lst)
+	{
+		if (lst->content)
+			ft_printf("%s\n", lst->content);
+		lst = lst->next;
+	}
+	return (0);
+}
+
+int	export(t_prog *prog, t_ast *ast)
+{
+	char	**tmp;
+	char	**tmp2;
+	ast = ast->l_child;
+	while (ast && ast->type == ARG_NODE)
+	{
+		ast = ast->l_child;
+	}
 }

@@ -76,21 +76,27 @@ int	dup_correct_fd_multi(t_prog *prog, t_ast *ast, int n)
 
 	infile_node = get_last_redirec_node(ast, 0);
 	outfile_node = get_last_redirec_node(ast, 1);
-	if (n == prog->parser->nb_pipes)
+	if (outfile_node)
 	{
-		if (dup2(prog->fds[n][0], 0) < 0)
+		if (dup2(outfile_node->value, 0) < 0)
 			return (-1);
 	}
 	else if (n == prog->parser->nb_pipes)
 	{
-		if (dup2(prog->fds[1][1], 1) < 0)
+		if (dup2(prog->fds[n][0], 0) < 0)
 			return (-1);
 	}
 	else
+		if (dup2(prog->fds[n + 1][1], 1) < 0)
+			return (-1);
+	if (infile_node)
 	{
-		if (dup2(prog->fds[n][0], 0) < 0 || dup2(prog->fds[n + 1][1], 1) < 0)
+		if (dup2(infile_node->value, 0) < 0)
 			return (-1);
 	}
+	else
+		if (dup2(prog->fds[n][0], 0) < 0)
+			return (-1);
 	return (0);
 }
 

@@ -43,7 +43,8 @@ int				dup_correct_fd_multi(t_prog *prog, t_ast *ast, int n);
 int				wait_subprocesses(t_prog *prog, int n);
 //builtins
 int				echo(t_ast *ast);
-int				pwd(t_prog *prog);
+int				pwd(t_prog *prog, int print);
+int				env(t_prog *prog, t_ast *ast);
 //executor_debug
 void			print_cmds(t_list *list_cmd);
 

@@ -50,6 +50,7 @@ void	print_ast(t_ast *node, int space)
 			printf("REDIRECTION OUTPUT : %s ", node->content);
 			print_ast(node->l_child, space);
 			break ;
+		case BUILTIN_NODE:
 		case CMD_NODE:
 			printf("COMMANDE : %s ", node->content);
 			if (!node->l_child)

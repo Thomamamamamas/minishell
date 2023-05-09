@@ -35,7 +35,7 @@ int	main(int argc, char **argv,char **envp)
 			parsing_error_gestion(prog.parser);
 			if (prog.parser->error_code == 0)
 			{
-				//print_parser(prog.parser);
+				print_parser(prog.parser);
 				execute_line(&prog);
 				free_parser(&prog);
 			}

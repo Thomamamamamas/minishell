@@ -78,13 +78,13 @@ int	execute_builtin(t_prog *prog, t_ast *ast)
 	if (!ft_strcmp(ast->content, "cd"))
 		return (0);
 	if (!ft_strcmp(ast->content, "pwd"))
-		return (pwd(prog));
+		return (pwd(prog, 1));
 	if (!ft_strcmp(ast->content, "export"))
 		return (0);
 	if (!ft_strcmp(ast->content, "unset"))
 		return (0);
 	if (!ft_strcmp(ast->content, "env"))
-		return (0);
+		return (env(prog, ast));
 	if (!ft_strcmp(ast->content, "exit"))
 		return (0);
 	return (0);

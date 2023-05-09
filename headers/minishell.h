@@ -30,6 +30,7 @@
 
 //init
 t_prog			init_shell(char **envp);
+t_list			*make_env(char **envp);
 char			**get_path_variable(char **envp);
 //utils
 int				blank_line(char *line);
